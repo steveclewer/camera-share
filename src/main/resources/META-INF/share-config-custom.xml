@@ -1,0 +1,139 @@
+<alfresco-config>
+
+    <!-- Document Library config section -->
+    <config evaluator="string-compare" condition="DocumentLibrary">
+    
+	    <aspects>
+		    <!-- Aspects that a user can see -->
+		    <visible>
+<!-- 		        <aspect name="sc:webable" /> -->
+<!-- 		        <aspect name="sc:productRelated" /> -->
+		    </visible>
+		
+		    <!-- Aspects that a user can add. Same as "visible" if left empty -->
+		    <addable>
+		    </addable>
+		
+		    <!-- Aspects that a user can remove. Same as "visible" if left empty -->
+		    <removeable>
+		    </removeable>
+	    </aspects>
+    
+	    <types>
+		    <type name="cm:content">
+		        <subtype name="cam:cameraType"/>
+		    </type>
+	    </types>
+
+        <create-content>
+            <content id="cameraContent" mimetype="text/html" label="camera.cameraDocument" itemid="cam:cameraType" index="10" />
+        </create-content>
+
+    </config>
+
+    <!-- New camera type (this is used for EXISTING nodes) -->
+    <config evaluator="node-type" condition="cam:cameraType">
+        <forms>
+            <form>
+                <field-visibility>
+                    <show id="cm:name" />
+                    <show id="cm:title" force="true" />
+                    <show id="cm:description" force="true" />
+                    <show id="cm:content" force="true" />
+
+                    <!-- Custom fields -->
+                    <show id="cam:cameraModel" />
+                    <show id="cam:cameraPrice" />
+                </field-visibility>
+                <appearance>
+                    <field id="cm:name">
+                        <control>
+                            <control-param name="maxLength">255</control-param>
+                        </control>
+                    </field>
+                    <field id="cm:title">
+                        <control template="/org/alfresco/components/form/controls/textfield.ftl" />
+                    </field>
+                    <field id="cm:description">
+                        <control>
+                            <control-param name="activateLinks">true</control-param>
+                        </control>
+                    </field>
+
+                    <!-- Custom stuff -->
+                    <field id="cam:cameraModel" label-id="camera.metadata.model"/>
+                    <field id="cam:cameraPrice" label-id="camera.metadata.price"/>
+                </appearance>
+            </form>
+        </forms>
+    </config>
+
+    <!-- New camera type (this is used when creating NEW nodes). -->
+    <config evaluator="model-type" condition="cam:cameraType">
+        <forms>
+
+            <!-- This definition is what will show up when creating a NEW node. -->
+            <form>
+                <field-visibility>
+                    <show id="cm:name" />
+                    <show id="cm:title" force="true" />
+                    <show id="cm:description" force="true" />
+                    <show id="cm:content" force="true" />
+
+                    <!-- Custom fields -->
+                    <show id="cam:cameraModel" />
+                    <show id="cam:cameraPrice" />
+                </field-visibility>
+                <appearance>
+                    <field id="cm:name">
+                        <control>
+                            <control-param name="maxLength">255</control-param>
+                        </control>
+                    </field>
+                    <field id="cm:title">
+                        <control template="/org/alfresco/components/form/controls/textfield.ftl" />
+                    </field>
+                    <field id="cm:description">
+                        <control>
+                            <control-param name="activateLinks">true</control-param>
+                        </control>
+                    </field>
+
+                    <!-- Custom stuff -->
+                    <field id="cam:cameraModel" label-id="camera.metadata.model"/>
+                    <field id="cam:cameraPrice" label-id="camera.metadata.price"/>
+                </appearance>
+            </form>
+
+            <!-- This definition is for the form that will show up in the search. -->
+            <form id="search">
+                <field-visibility>
+                    <show id="cm:name" />
+                    <show id="cm:title" force="true" />
+                    <show id="cm:description" force="true" />
+
+                    <!-- Custom fields -->
+                    <show id="cam:cameraModel" />
+                    <show id="cam:cameraPrice" />
+                </field-visibility>
+                <appearance>
+                    <field id="cam:cameraModel" label-id="camera.metadata.model"/>
+                    <field id="cam:cameraPrice" label-id="camera.metadata.price"/>
+                </appearance>
+            </form>
+        </forms>
+    </config>
+
+    <!-- Customize the advanced search -->
+    <config replace="true" evaluator="string-compare" condition="AdvancedSearch">
+        <advanced-search>
+            <!-- Forms for the advanced search type list -->
+            <forms>
+                <form labelId="search.form.label.cm_content" descriptionId="search.form.desc.cm_content">cm:content</form>
+                <form labelId="search.form.label.cm_folder" descriptionId="search.form.desc.cm_folder">cm:folder</form>
+                <form labelId="search.form.label.cam_cameraType" descriptionId="search.form.desc.cam_cameraType">cam:cameraType</form>
+            </forms>
+        </advanced-search>
+    </config>
+
+</alfresco-config>
